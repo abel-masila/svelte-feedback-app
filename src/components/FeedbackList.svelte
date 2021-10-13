@@ -1,5 +1,9 @@
 <script>
+  import FeedbackItem from './FeedbackItem.svelte';
   export let feedback = [];
+  console.log(feedback);
 </script>
 
-Feedback List
+{#each feedback as feedback (feedback.id)}
+  <FeedbackItem item={feedback} />
+{/each}
