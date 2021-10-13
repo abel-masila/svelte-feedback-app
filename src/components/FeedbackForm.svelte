@@ -33,6 +33,7 @@
         rating: +rating,
       };
       dispatch('add-feedback', newFeedback);
+      text = '';
     }
   };
 </script>
