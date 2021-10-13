@@ -1,11 +1,19 @@
 <script>
+  import { createEventDispatcher } from 'svelte';
+  import { v4 as uuidv4 } from 'uuid';
   import Card from './Card.svelte';
   import Button from './Button.svelte';
+  import RatingSelect from './RatingSelect.svelte';
+
+  const dispatch = createEventDispatcher();
 
   let text = '';
   let btnDisabled = true;
   let min = 10;
   let message;
+  let rating = 10;
+
+  const handleSelect = (e) => (rating = e.detail);
 
   const handleInput = () => {
     if (text.trim().length <= min) {
@@ -16,14 +24,25 @@
       btnDisabled = false;
     }
   };
+
+  const handleSubmit = () => {
+    if (text.trim().length > min) {
+      const newFeedback = {
+        id: uuidv4(),
+        text: text,
+        rating: +rating,
+      };
+      dispatch('add-feedback', newFeedback);
+    }
+  };
 </script>
 
 <Card>
   <header>
     <h2>How would you rate your service with us?</h2>
   </header>
-  <form>
-    <!-- Rating Select -->
+  <form on:submit|preventDefault={handleSubmit}>
+    <RatingSelect on:rating-select={handleSelect} />
     <div class="input-group">
       <input
         placeholder="Tell us something that keeps you coming back"
