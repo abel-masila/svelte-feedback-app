@@ -1,4 +1,4 @@
-## Get started
+# Get started
 
 Install the dependencies...
 
